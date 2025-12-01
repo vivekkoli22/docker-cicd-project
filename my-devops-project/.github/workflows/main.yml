@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. GitHub ka code checkout karo
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Docker Hub mein Login karo (Secrets use karke)
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # 3. Image Build aur Push karo
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        # Yahan dhyan dena: Image ka naam 'username/repo-name' format mein hoga
+        tags: ${{ secrets.DOCKER_USERNAME }}/cicd-demo:latest
