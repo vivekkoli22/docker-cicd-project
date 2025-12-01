@@ -7,24 +7,40 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-    # 1. GitHub ka code checkout karo
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # 2. Docker Hub mein Login karo (Secrets use karke)
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # 3. Image Build aur Push karo
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
-        # Yahan dhyan dena: Image ka naam 'username/repo-name' format mein hoga
         tags: ${{ secrets.DOCKER_USERNAME }}/cicd-demo:latest
+
+  deploy:
+    needs: build-and-push  
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # 1. Stop and remove old container (if running)
+          sudo docker stop my-app-container || true
+          sudo docker rm my-app-container || true
+          
+          # 2. Pull the latest image from Docker Hub
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/cicd-demo:latest
+          
+          # 3. Run new container (Mapping port 5000)
+          sudo docker run -d -p 5000:5000 --name my-app-container ${{ secrets.DOCKER_USERNAME }}/cicd-demo:latest
