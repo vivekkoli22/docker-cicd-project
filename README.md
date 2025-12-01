@@ -42,7 +42,7 @@ Whenever code is pushed to the `main` branch, the pipeline triggers automaticall
     docker run -p 5000:5000 my-app
     ```
 4.  **Access the App:**
-    Open `http://localhost:5000` in your browser.
+    Open `http://13.203.221.137:5000` in your browser.
 
 ## 📂 Project Structure
 ```text
