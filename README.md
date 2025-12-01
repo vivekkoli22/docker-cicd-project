@@ -31,7 +31,7 @@ Whenever code is pushed to the `main` branch, the pipeline triggers automaticall
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/vivekkoli22/docker-cicd-project.git](https://github.com/vivekkoli22/docker-cicd-project.git)
+    [https://github.com/vivekkoli22/docker-cicd-project.git]
     ```
 2.  **Build the Docker Image:**
     ```bash
