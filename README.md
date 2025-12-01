@@ -13,6 +13,10 @@ Whenever code is pushed to the `main` branch, the pipeline triggers automaticall
 ## 🏗️ Architecture
 **Flow:** `Code Push` -> `GitHub Actions` -> `Build Docker Image` -> `Push to Docker Hub` -> `Login to AWS EC2` -> `Pull & Run Container`
 
+## 📸 Output Screenshots
+<img width="1899" height="914" alt="Screenshot 2025-12-01 233849" src="https://github.com/user-attachments/assets/3f3631a7-b57a-401e-a43d-08e1c7e5da1f" />
+<img width="481" height="181" alt="Screenshot 2025-12-01 233947" src="https://github.com/user-attachments/assets/80d9ef89-99dc-44bf-b861-58e4c78d941a" />
+
 ## 🛠️ Tech Stack Used
 * **Version Control:** Git & GitHub
 * **Containerization:** Docker
